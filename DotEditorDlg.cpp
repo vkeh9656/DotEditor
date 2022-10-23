@@ -68,7 +68,7 @@ BOOL CDotEditorDlg::OnInitDialog()
 	GetDlgItem(IDC_RIGHT_COLOR_BTN)->GetWindowRect(m_right_rect);
 	ScreenToClient(m_right_rect);
 	m_right_rect.left -= 10;
-	m_right_rect.right = m_left_rect.left + 5;
+	m_right_rect.right = m_right_rect.left + 5;
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
