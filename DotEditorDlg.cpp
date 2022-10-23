@@ -44,6 +44,8 @@ BEGIN_MESSAGE_MAP(CDotEditorDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_WM_MOUSEMOVE()
+	ON_BN_CLICKED(IDC_LEFT_COLOR_BTN, &CDotEditorDlg::OnBnClickedLeftColorBtn)
+	ON_BN_CLICKED(IDC_RIGHT_COLOR_BTN, &CDotEditorDlg::OnBnClickedRightColorBtn)
 END_MESSAGE_MAP()
 
 
@@ -154,4 +156,16 @@ void CDotEditorDlg::OnMouseMove(UINT nFlags, CPoint point)
 	}
 
 	CDialogEx::OnMouseMove(nFlags, point);
+}
+
+
+void CDotEditorDlg::OnBnClickedLeftColorBtn()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CDotEditorDlg::OnBnClickedRightColorBtn()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

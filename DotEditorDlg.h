@@ -39,4 +39,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnBnClickedLeftColorBtn();
+	afx_msg void OnBnClickedRightColorBtn();
 };
