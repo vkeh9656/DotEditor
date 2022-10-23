@@ -85,14 +85,28 @@ void CDotEditorDlg::OnPaint()
 	else
 	{
 		CPen* p_old_pen = dc.SelectObject(&m_grid_pen);
+		CBrush* p_old_brush = dc.GetCurrentBrush();
+		//CBrush temp_brush;
+
+		dc.SelectStockObject(DC_BRUSH);
+
 		for (int y = 0; y < Y_COUNT; y++)
 		{
 			for (int x = 0; x < X_COUNT; x++)
 			{
+				if (dc.GetDCBrushColor() != m_dot_color[y][x])
+				{
+					dc.SetDCBrushColor(m_dot_color[y][x]);
+				}
+				//temp_brush.CreateSolidBrush(m_dot_color[y][x]);
+				//dc.SelectObject(&temp_brush);
+
 				dc.Rectangle(x * RECT_INTERVAL, 
 							y * RECT_INTERVAL,
 							RECT_INTERVAL + 1 + x * RECT_INTERVAL,
 							RECT_INTERVAL + 1 + y * RECT_INTERVAL);
+
+				//temp_brush.DeleteObject();
 			}
 		}
 
