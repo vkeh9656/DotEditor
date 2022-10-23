@@ -30,6 +30,9 @@ CDotEditorDlg::CDotEditorDlg(CWnd* pParent /*=nullptr*/)
 			m_dot_color[y][x] = RGB(255, 255, 255);
 		}
 	}
+
+	m_left_btn_color = RGB(0, 0, 255);
+	m_right_btn_color = RGB(255, 255, 255);
 }
 
 void CDotEditorDlg::DoDataExchange(CDataExchange* pDX)
@@ -40,6 +43,7 @@ void CDotEditorDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDotEditorDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 
@@ -122,3 +126,32 @@ HCURSOR CDotEditorDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CDotEditorDlg::OnMouseMove(UINT nFlags, CPoint point)
+{
+	if (nFlags & (MK_LBUTTON | MK_RBUTTON))
+	{
+		int x = point.x / RECT_INTERVAL; // x축 index
+		int y = point.y / RECT_INTERVAL; // y축 index
+
+		if (x < X_COUNT && y < Y_COUNT)
+		{
+			if (nFlags & MK_LBUTTON) m_dot_color[y][x] = m_left_btn_color;
+			else m_dot_color[y][x] = m_right_btn_color;
+
+			CClientDC dc(this);
+			CPen* p_old_pen = dc.SelectObject(&m_grid_pen);
+			CGdiObject *p_old_brush = dc.SelectStockObject(DC_BRUSH);
+
+			dc.SetDCBrushColor(m_dot_color[y][x]);
+			dc.Rectangle(x * RECT_INTERVAL, y * RECT_INTERVAL,
+						RECT_INTERVAL + 1 + x * RECT_INTERVAL,
+						RECT_INTERVAL + 1 + y * RECT_INTERVAL);
+			dc.SelectObject(p_old_brush);
+			dc.SelectObject(p_old_pen);
+		}
+	}
+
+	CDialogEx::OnMouseMove(nFlags, point);
+}

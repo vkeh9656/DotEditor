@@ -13,6 +13,7 @@ class CDotEditorDlg : public CDialogEx
 {
 private:
 	COLORREF m_dot_color[Y_COUNT][X_COUNT];
+	COLORREF m_left_btn_color, m_right_btn_color;
 	CPen m_grid_pen;
 // 생성입니다.
 public:
@@ -36,4 +37,6 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };
