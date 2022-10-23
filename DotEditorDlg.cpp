@@ -18,9 +18,18 @@
 
 
 CDotEditorDlg::CDotEditorDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_DOTEDITOR_DIALOG, pParent)
+	: CDialogEx(IDD_DOTEDITOR_DIALOG, pParent), 
+	m_grid_pen(PS_SOLID, 1, RGB(220, 220, 220))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+
+	for (int y = 0; y < Y_COUNT; y++)
+	{
+		for (int x = 0; x < X_COUNT; x++)
+		{
+			m_dot_color[y][x] = RGB(255, 255, 255);
+		}
+	}
 }
 
 void CDotEditorDlg::DoDataExchange(CDataExchange* pDX)
@@ -75,13 +84,19 @@ void CDotEditorDlg::OnPaint()
 	}
 	else
 	{
-		for (int y = 0; y < 30; y++)
+		CPen* p_old_pen = dc.SelectObject(&m_grid_pen);
+		for (int y = 0; y < Y_COUNT; y++)
 		{
-			for (int x = 0; x < 30; x++)
+			for (int x = 0; x < X_COUNT; x++)
 			{
-				dc.Rectangle(x * 20, y * 20, 21 + x * 20, 21 + y * 20);
+				dc.Rectangle(x * RECT_INTERVAL, 
+							y * RECT_INTERVAL,
+							RECT_INTERVAL + 1 + x * RECT_INTERVAL,
+							RECT_INTERVAL + 1 + y * RECT_INTERVAL);
 			}
 		}
+
+		dc.SelectObject(p_old_pen);
 		/*CDialogEx::OnPaint();*/
 	}
 }

@@ -4,10 +4,16 @@
 
 #pragma once
 
+#define X_COUNT			30
+#define Y_COUNT			30
+#define RECT_INTERVAL	20
 
 // CDotEditorDlg 대화 상자
 class CDotEditorDlg : public CDialogEx
 {
+private:
+	COLORREF m_dot_color[Y_COUNT][X_COUNT];
+	CPen m_grid_pen;
 // 생성입니다.
 public:
 	CDotEditorDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
