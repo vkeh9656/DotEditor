@@ -60,7 +60,15 @@ BOOL CDotEditorDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
-	// TODO: 여기에 추가 초기화 작업을 추가합니다.
+	GetDlgItem(IDC_LEFT_COLOR_BTN)->GetWindowRect(m_left_rect);
+	ScreenToClient(m_left_rect);
+	m_left_rect.left -= 10;
+	m_left_rect.right = m_left_rect.left + 5;
+
+	GetDlgItem(IDC_RIGHT_COLOR_BTN)->GetWindowRect(m_right_rect);
+	ScreenToClient(m_right_rect);
+	m_right_rect.left -= 10;
+	m_right_rect.right = m_left_rect.left + 5;
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -116,6 +124,13 @@ void CDotEditorDlg::OnPaint()
 			}
 		}
 
+		dc.SetDCBrushColor(m_left_btn_color);
+		dc.Rectangle(m_left_rect);
+
+		dc.SetDCBrushColor(m_right_btn_color);
+		dc.Rectangle(m_right_rect);
+
+		dc.SelectObject(p_old_brush);
 		dc.SelectObject(p_old_pen);
 		/*CDialogEx::OnPaint();*/
 	}
@@ -161,11 +176,27 @@ void CDotEditorDlg::OnMouseMove(UINT nFlags, CPoint point)
 
 void CDotEditorDlg::OnBnClickedLeftColorBtn()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CColorDialog ins_dlg;
+	ins_dlg.m_cc.Flags = ins_dlg.m_cc.Flags | CC_FULLOPEN | CC_RGBINIT;
+	ins_dlg.m_cc.rgbResult = m_left_btn_color;
+
+	if (IDOK == ins_dlg.DoModal())
+	{
+		m_left_btn_color = ins_dlg.GetColor();
+		InvalidateRect(m_left_rect, FALSE);
+	}
 }
 
 
 void CDotEditorDlg::OnBnClickedRightColorBtn()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CColorDialog ins_dlg;
+	ins_dlg.m_cc.Flags = ins_dlg.m_cc.Flags | CC_FULLOPEN | CC_RGBINIT;
+	ins_dlg.m_cc.rgbResult = m_right_btn_color;
+
+	if (IDOK == ins_dlg.DoModal())
+	{
+		m_right_btn_color = ins_dlg.GetColor();
+		InvalidateRect(m_right_rect, FALSE);
+	}
 }

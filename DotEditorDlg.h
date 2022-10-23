@@ -14,6 +14,8 @@ class CDotEditorDlg : public CDialogEx
 private:
 	COLORREF m_dot_color[Y_COUNT][X_COUNT];
 	COLORREF m_left_btn_color, m_right_btn_color;
+
+	CRect m_left_rect, m_right_rect;
 	CPen m_grid_pen;
 // 생성입니다.
 public:
